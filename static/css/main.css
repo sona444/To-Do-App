@@ -1,0 +1,56 @@
+body{
+    background-image: linear-gradient(to left, #06f3d3, #c12dfc);
+    background-size:600% 600%;
+    animation:gradient 10s infinite;
+}
+hr{
+    border:1px solid black;
+}
+.navbar-center { 
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+    font-size: 30px;
+    color:black;
+    }
+.navbar-nav{
+        padding:30px 0;
+        margin-bottom:15px;
+    }
+table{
+    position:absolute;
+    left:50%;
+    margin-top:20px;
+    transform:translatex(-50%);
+}
+table, tr, th, td{
+    border:2px solid black;
+    padding:5px 15px;
+}
+#new{
+    background-color:#32A067;
+    color:white;
+    border:0;
+    margin-top:10px;
+    padding:5px 15px;
+    border-radius:5px;
+    position:relative;
+    left:50%;
+    transform:translatex(-50%);
+}
+#new:hover{
+    background-color: white;
+    color:#32A067;
+    border:1px solid #32A067;
+}
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
