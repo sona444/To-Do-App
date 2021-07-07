@@ -10,12 +10,12 @@ hr{
     position: absolute;
     left: 50%;
     transform: translatex(-50%);
-    font-size: 30px;
+    font-size: 30px !important;
     color:black;
     }
 .navbar-nav{
-        padding:30px 0;
-        margin-bottom:15px;
+        padding:30px 0 !important;
+        margin-bottom:15px !important;
     }
 table{
     position:absolute;
@@ -26,6 +26,11 @@ table{
 table, tr, th, td{
     border:2px solid black;
     padding:5px 15px;
+    font-family: ;
+}
+input, select{
+    width:100%;
+    padding:10px;
 }
 #new{
     background-color:#32A067;
@@ -37,6 +42,22 @@ table, tr, th, td{
     position:relative;
     left:50%;
     transform:translatex(-50%);
+}
+#btn-save{
+    background-color:#32A067;
+    color:white;
+    border:0;
+    margin-top:10px;
+    padding:5px 15px;
+    border-radius:5px;
+}
+#btn-close{
+    background-color: rgb(248, 74, 74);
+    color:white;
+    border:0;
+    margin-top:10px;
+    padding:5px 15px;
+    border-radius:5px;
 }
 #new:hover{
     background-color: white;

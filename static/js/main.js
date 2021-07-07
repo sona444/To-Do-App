@@ -1,3 +1,3 @@
-function displayModal(){
-    $("#exampleModalCenter").style.display=block;
-}
+$(document).ready(function(){
+    $('#​exampleModalCenter').modal('show');
+});

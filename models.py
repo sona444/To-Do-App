@@ -6,3 +6,10 @@ class task(db.Model):
     name=db.Column(db.String)
     description=db.Column(db.Text)
     deadline=db.Column(db.Date)
+    status=db.Column(db.Text)
+
+def __init__(self, name, description, deadline, status):
+        self.name = name
+        self.description = description
+        self.deadline = deadline
+        self.status = status

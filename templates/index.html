@@ -32,11 +32,11 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
-            <input type="text" placeholder="Task name" required>
-            <input type="text" placeholder="Task description" required>
-            <input type="date" placeholder="Deadline" required>
-            <select name="status" required>
+        <form id="task-form">
+            <input type="text" id="task-name" name="name" placeholder="Task name" required>
+            <input type="text" id="task-description" name="description" placeholder="Task description" required>
+            <input type="date" id="task-deadline" name="deadline" placeholder="Deadline" required>
+            <select name="status" id="task-status" required>
             <option>Not Yet Started</option>
             <option>In Progress</option>
             <option>Done</option>
@@ -44,12 +44,53 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn" id="btn-close" data-dismiss="modal">Close</button>
+        <button type="button" class="btn" id="btn-save">Save task</button>
       </div>
     </div>
   </div>
 </div>
 </main>
+<script>
+  $(document).on('click', '#btn-save', function(e){
+    e.preventDefault();
+    var form = $('#task-form');
+
+    let name = $('#task-name').val();
+    let description = $('#task-description').val();
+    let deadline = $('#task-deadline').val();
+    let status = $('#task-status').val();
+    jsondata={
+      "name":name,
+      "description":description,
+      "deadline":deadline,
+      "status":status
+    }
+    
+
+    // disabled the submit button
+    $("#btn-save").prop("disabled", true);
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        contentType: "application/x-www-form-urlencoded",
+        data: JSON.stringify(jsondata),
+        url:"/add-task",
+        error: function (request, error) {
+            console.log(arguments);
+            alert(" Can't do because: " + error);
+        },
+        success: function(data){
+          console.log(data);
+          data=data;
+          var msg=String(data.message);
+          alert("Message "+msg);
+        },
+        complete: function(){
+          $("#btn-save").prop("disabled", false);    // enabled the submit button
+        }
+      })
+  });
+</script>
 
 {% endblock content %}
