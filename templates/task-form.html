@@ -1,0 +1,66 @@
+{% extends "layout/base.html" %}
+
+{% block title %} To-do App {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block body_class %} landing-page {% endblock body_class %}
+
+{% block content %}
+<div id="form-new">
+<form id="task-form">
+    <input type="hidden" id="task-id" name="id" value="{{task.id if task else ''}}">
+    <input type="text" id="task-name" name="name" placeholder="Task name" required  value="{{task.name if task else ''}}" >
+    <input type="text" id="task-description" name="description" placeholder="Task description" required value="{{task.description if task else ''}}">
+    <input type="date" id="task-deadline" name="deadline" placeholder="Deadline" required value="{{task.deadline if task else ''}}">
+    <select name="status" id="task-status" required value="{{task.status if task else ''}}">
+        <option>Not Yet Started</option>
+        <option>In Progress</option>
+        <option>Done</option>
+    </select><br>
+    <button type="button" class="btn" id="btn-save"><b>Save task</b></button>
+</form>
+</div>
+<script>
+    
+  $(document).on('click', '#btn-save', function(e){
+    e.preventDefault();
+    var form = $('#task-form');
+
+    let id= $('#task-id').val();
+    let name = $('#task-name').val();
+    let description = $('#task-description').val();
+    let deadline = $('#task-deadline').val();
+    let status = $('#task-status').val();
+    jsondata={
+      "id":id,
+      "name":name,
+      "description":description,
+      "deadline":deadline,
+      "status":status
+    }
+    console.log(jsondata);
+
+    // disabled the submit button
+    $("#btn-save").prop("disabled", true);
+    $.ajax({
+        type: "POST",
+        data: jsondata,
+        url:"/add-task",
+        error: function (request, error) {
+            console.log(arguments);
+            alert(" Can't do because: " + error);
+        },
+        success: function(data){
+          console.log(data);
+          alert(Task saved!);
+        },
+        complete: function(){
+          $("#btn-save").prop("disabled", false);    // enabled the submit button
+        }
+      })
+  });
+</script>
+
+{% endblock content %}

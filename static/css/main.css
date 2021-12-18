@@ -26,10 +26,9 @@ table{
 table, tr, th, td{
     border:2px solid black;
     padding:5px 15px;
-    font-family: ;
 }
 input, select{
-    width:100%;
+    width:50%;
     padding:10px;
 }
 #new{
@@ -51,18 +50,21 @@ input, select{
     padding:5px 15px;
     border-radius:5px;
 }
-#btn-close{
-    background-color: rgb(248, 74, 74);
-    color:white;
-    border:0;
-    margin-top:10px;
-    padding:5px 15px;
-    border-radius:5px;
-}
 #new:hover{
     background-color: white;
     color:#32A067;
     border:1px solid #32A067;
+}
+#delete{
+    color:black;
+}
+#task-form{
+    position:absolute;
+    left:50%;
+    margin-top:20px;
+    width:50%;
+    transform:translatex(-50%);
+    text-align:center;
 }
 @keyframes gradient {
 	0% {

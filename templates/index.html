@@ -11,86 +11,63 @@
 
 <main>
 <hr>
-<button type="button" id="new" class="btn" data-toggle="modal" data-target="#exampleModalCenter"><b>Add New</b></button>
+<a href="{{url_for('newtask')}}"><button type="button" id="new" class="btn"><b>Add New</b></button></a>
 
-<table>
+<table id="tasks-table" >
 <tr>
 <th>ID</th>
 <th>Task Name</th>
 <th>Description</th>
 <th>Deadline</th>
 <th>Status</th>
+<th>Edit</th>
+<th>Delete</th>
 </tr>
+  {% for tas in task %}
+    <tr>
+      <td>{{tas.id}}</td>
+      <td>{{tas.name}}</td>
+      <td>{{tas.description}}</td>
+      <td>{{tas.deadline}}</td>
+      <td>{{tas.status}}</td>
+      <td><a href="{{url_for('edittask',task_id=tas.id)}}" id="delete"><i class="fas fa-pen"></i></a></td>
+      <td><a href="{{url_for('deletetask',task_id=tas.id)}}" id="delete"><i class="fas fa-trash-alt"></i></a></td>
+    </tr>
+  {% endfor %}   
 </table>
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Add New Task</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="task-form">
-            <input type="text" id="task-name" name="name" placeholder="Task name" required>
-            <input type="text" id="task-description" name="description" placeholder="Task description" required>
-            <input type="date" id="task-deadline" name="deadline" placeholder="Deadline" required>
-            <select name="status" id="task-status" required>
-            <option>Not Yet Started</option>
-            <option>In Progress</option>
-            <option>Done</option>
-            </select>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn" id="btn-close" data-dismiss="modal">Close</button>
-        <button type="button" class="btn" id="btn-save">Save task</button>
-      </div>
-    </div>
-  </div>
-</div>
-</main>
 <script>
-  $(document).on('click', '#btn-save', function(e){
-    e.preventDefault();
-    var form = $('#task-form');
+	    $.ajax({
+	    	type:"GET",
+	    	url : "/",
+	    	success: function(response){
+	    		response = JSON.parse(response);
+	    		console.log(response);
+				console.log("data"+" "+response.data)
+    			if(response.message == "success"){
 
-    let name = $('#task-name').val();
-    let description = $('#task-description').val();
-    let deadline = $('#task-deadline').val();
-    let status = $('#task-status').val();
-    jsondata={
-      "name":name,
-      "description":description,
-      "deadline":deadline,
-      "status":status
-    }
-    
+    				if(response.data.length >0){
+    					 var taskData = response.data;
 
-    // disabled the submit button
-    $("#btn-save").prop("disabled", true);
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        contentType: "application/x-www-form-urlencoded",
-        data: JSON.stringify(jsondata),
-        url:"/add-task",
-        error: function (request, error) {
-            console.log(arguments);
-            alert(" Can't do because: " + error);
-        },
-        success: function(data){
-          console.log(data);
-          data=data;
-          var msg=String(data.message);
-          alert("Message "+msg);
-        },
-        complete: function(){
-          $("#btn-save").prop("disabled", false);    // enabled the submit button
-        }
-      })
-  });
+    					 for (i=0;i<taskData.length;i++){
+    					 	console.log(taskData[i])
+							 $("#gallery").eq(1).append(`<div class="col-md-3">
+		    														<div class="thumbnail">
+		    															<img src="${taskData[i]}" class="img img-responsive galleryitem" height="200" width="200">
+		    														</div>
+		    													</div>`
+															);
+    					 }
+    				}
+    			}
+	    	},
+	    	error: function(xhr,textStatus){
+
+	    	},
+	    	complete: function(){
+
+	    	}
+	    });
+	}); 
 </script>
 
 {% endblock content %}
